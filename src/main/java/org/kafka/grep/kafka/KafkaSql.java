@@ -78,22 +78,13 @@ public class KafkaSql {
                 .type(Boolean.class)
                 .required(false)
                 .setDefault(true)
-                .help("end date to end search at");
-
-
-        parser.addArgument("--skip_entity")
-                .dest("skip_entity")
-                .type(Boolean.class)
-                .required(false)
-                .setDefault(true)
                 .help("when to skip the entity root.");
 
 
         parser.addArgument("--brokers")
                 .dest("brokers")
-                .type(Boolean.class)
-                .required(false)
-                .setDefault(true)
+                .type(String.class)
+                .required(true)
                 .help("Kafka brokers ");
     }
 
