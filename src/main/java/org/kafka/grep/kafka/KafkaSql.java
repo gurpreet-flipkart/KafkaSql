@@ -27,7 +27,7 @@ public class KafkaSql {
     public KafkaSql() {
         parser = ArgumentParsers.newArgumentParser("kafka")
                 .defaultHelp(true)
-                .description("Calculate checksum of given files.");
+                .description("run the sql query on Kafka topic stream");
         parser.addArgument("--query")
                 .dest("query")
                 .type(String.class)
@@ -38,7 +38,7 @@ public class KafkaSql {
                 .dest("limit")
                 .type(Integer.class)
                 .required(true)
-                .help("whether to continue on match");
+                .help("how many instances to be fetched per partition.");
 
         parser.addArgument("--start")
                 .dest("start")
@@ -56,13 +56,13 @@ public class KafkaSql {
                 .dest("startEpoch")
                 .type(Long.class)
                 .required(false)
-                .help("start date to start search at");
+                .help("start time in epoch to start search at");
 
         parser.addArgument("--endEpoch")
                 .dest("endEpoch")
                 .type(Long.class)
                 .required(false)
-                .help("end date to end search at");
+                .help("end time in epoch to end search at");
 
 
         parser.addArgument("--key")
@@ -70,7 +70,7 @@ public class KafkaSql {
                 .type(Boolean.class)
                 .required(false)
                 .setDefault(false)
-                .help("If the where clause has the key which is the same as the kafka partitioning key.");
+                .help("If the where clause has the key which is the same as the kafka partitioning key. Other threads will stop when one of the threads finds a match");
 
 
         parser.addArgument("--skip_entity")
@@ -78,14 +78,14 @@ public class KafkaSql {
                 .type(Boolean.class)
                 .required(false)
                 .setDefault(true)
-                .help("when to skip the entity root.");
+                .help("when to skip the entity root of the payload.");
 
 
         parser.addArgument("--brokers")
                 .dest("brokers")
                 .type(String.class)
                 .required(true)
-                .help("Kafka brokers ");
+                .help("Kafka brokers <ip>:<port>[,<ip>:<port>]*");
     }
 
     Supplier<IllegalArgumentException> illegalInput = () -> new IllegalArgumentException();
